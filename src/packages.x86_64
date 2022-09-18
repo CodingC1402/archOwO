@@ -122,7 +122,6 @@ xf86-video-vesa
 networkmanager
 network-manager-applet
 xorg
-xorg-xinit
 xfce4
 xfce4-goodies
 firefox
