@@ -17,4 +17,6 @@ airootfs_image_type="erofs"
 airootfs_image_tool_options=('-zlz4hc,12' -E ztailpacking)
 file_permissions=(
   ["/etc/shadow"]="0:0:400"
+  ["/etc/gshadow"]="0:0:0400"
+  ["/etc/sudoers"]="0:0:0400"
 )

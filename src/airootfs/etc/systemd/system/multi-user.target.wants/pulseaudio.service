@@ -1,0 +1,8 @@
+[Unit]
+Description=Pulse Audio
+
+[Service]
+ExecStart=/usr/bin/pulseaudio -D
+
+[Install]
+WantedBy=multi-user.target

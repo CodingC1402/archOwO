@@ -4,6 +4,9 @@ base
 linux
 linux-firmware
 
+# [Previlledge packages]
+sudo
+
 # [IDE packages]
 vim
 parole
@@ -16,8 +19,10 @@ xf86-video-vesa
 # [Desktop environment packages]
 xfce4
 xfce4-goodies
-lightdm
-lightdm-webkit2-greeter
+catfish
+gvfs
+file-roller
+pamac
 
 # [Audio packages]
 pulseaudio
