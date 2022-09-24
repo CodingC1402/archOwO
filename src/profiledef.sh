@@ -19,4 +19,7 @@ file_permissions=(
   ["/etc/shadow"]="0:0:400"
   ["/etc/gshadow"]="0:0:0400"
   ["/etc/sudoers"]="0:0:0400"
+  ["/archOwO/initial-setups.sh"]="0:0:0700"
+  ["/archOwO/set_gnome_theme.sh"]="0:0:0700"
+  ["/archOwO_install/setup.sh"]="0:0:0700"
 )

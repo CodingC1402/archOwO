@@ -1,11 +1,16 @@
-base
-
 # [Linux essential packages]
 linux
 linux-firmware
+util-linux
+alsa-utils
+grub
+base
+arch-install-scripts
 
-# [Previlledge packages]
+# [Users packages]
 sudo
+shadow
+cryptsetup
 
 # [IDE packages]
 vim
@@ -23,6 +28,10 @@ catfish
 gvfs
 file-roller
 pamac
+sddm
+qt5-quickcontrols
+qt5-quickcontrols2
+qt5-graphicaleffects
 
 # [Audio packages]
 pulseaudio
@@ -31,6 +40,8 @@ pavucontrol
 # [Network packages]
 networkmanager
 network-manager-applet
+nftables
+openssh
 
 # [Browser packages]
 firefox

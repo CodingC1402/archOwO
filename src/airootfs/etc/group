@@ -1,0 +1,6 @@
+root:x:0:root
+adm:x:4:archowo
+wheel:x:10:archowo
+uucp:x:14:archowo
+archowo:x:1000:
+autologin:x:973:archowo

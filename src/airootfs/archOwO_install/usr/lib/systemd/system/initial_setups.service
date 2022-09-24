@@ -1,0 +1,8 @@
+[Unit]
+Description=Initial setups
+
+[Service]
+ExecStart=/archOwO/initial-setups.sh
+
+[Install]
+WantedBy=multi-user.target

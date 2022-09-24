@@ -1,3 +1,5 @@
+#!/bin/bash
+
 dir=$(dirname -- "$0")
 echo "building from $dir"
 
@@ -16,9 +18,9 @@ echo "2) build and keep build files"
 echo "3) build and burn"
 echo "4) build, burn and keep build files"
 
-read opt
+read -r opt
 
-rm -r $workDir
+rm -r "$workDir"
 case $opt in
 	1)
 		;;
@@ -26,18 +28,18 @@ case $opt in
 		;;
 	3)
 		echo "Disk to burn:"
-		read burnDisk
+		read -r burnDisk
 		;;
 	4)
 		echo "Disk to burn:"
-		read burnDisk
+		read -r burnDisk
 		;;
 	*)
 		;;
 esac
 		
 echo "Construct work directory"
-mkarchiso -v -w $workDir -o $outDir $profileDir
+mkarchiso -v -w "$workDir" -o "$outDir" "$profileDir"
 
 if [[ $opt == "1" ]] || [[ $opt == "3" ]]
 then
@@ -48,5 +50,5 @@ fi
 if [[ $opt == "3" ]] || [[ $opt == "4" ]]
 then
 	echo "Burning to disk..."
-	cp -r $outDir/*.iso $burnDisk
+	cp -r "$outDir"/*.iso "$burnDisk"
 fi

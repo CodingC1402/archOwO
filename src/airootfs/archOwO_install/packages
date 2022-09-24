@@ -1,0 +1,51 @@
+# [Linux essential packages]
+util-linux
+alsa-utils
+
+# [Users packages]
+sudo
+shadow
+cryptsetup
+
+# [IDE packages]
+parole
+gst-libav
+
+# [Package manager gui]
+pamac
+
+# [Graphics packages]
+nvidia-vulkan
+nvidia-vulkan-utils
+lib32-nvidia-vulkan-utils
+lib32-opencl-nvidia-vulkan
+opencl-nvidia-vulkan
+
+[Browser]
+ungoogled-chromium
+
+# [Desktop environment packages]
+xfce4
+xfce4-goodies
+catfish
+gvfs
+file-roller
+sddm
+qt5-quickcontrols
+qt5-quickcontrols2
+qt5-graphicaleffects
+
+# [Audio packages]
+pulseaudio
+pavucontrol
+
+# [Network packages]
+networkmanager
+network-manager-applet
+nftables
+openssh
+
+# [Installation packages]
+mkinitcpio
+pv
+syslinux
