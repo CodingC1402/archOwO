@@ -1,6 +1,8 @@
 # [Linux essential packages]
 linux
 linux-firmware
+linux-headers
+base-devel
 util-linux
 alsa-utils
 grub
@@ -14,6 +16,7 @@ cryptsetup
 
 # [IDE packages]
 vim
+git
 parole
 gst-libav
 

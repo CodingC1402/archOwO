@@ -1,6 +1,14 @@
 # [Linux essential packages]
+base 
+grub 
+linux 
+linux-firmware 
+vim
 util-linux
 alsa-utils
+linux-headers
+efibootmgr
+base-devel
 
 # [Users packages]
 sudo
@@ -15,13 +23,15 @@ gst-libav
 pamac
 
 # [Graphics packages]
-nvidia-vulkan
-nvidia-vulkan-utils
-lib32-nvidia-vulkan-utils
-lib32-opencl-nvidia-vulkan
-opencl-nvidia-vulkan
+xorg-server
+libglvnd
+egl-wayland
+zlib
+lib32-zlib
+lib32-gcc-libs
+lib32-libglvnd
 
-[Browser]
+# [Browser]
 ungoogled-chromium
 
 # [Desktop environment packages]
@@ -46,6 +56,4 @@ nftables
 openssh
 
 # [Installation packages]
-mkinitcpio
-pv
 syslinux
