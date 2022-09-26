@@ -33,13 +33,15 @@ apply_settings() {
         chmod 755 "$file"
     done
 
+    chmod 755 /etc/X11/xinit/xinitrc
+
     # Create auto login
     local -r auto_log_path="/etc/systemd/system/getty@tty1.service.d"
     mkdir -p "$auto_log_path"
     touch "$auto_log_path"/autologin.conf
     echo "[Service]
 ExecStart=
-ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin $USERNAME %I $TERM" >> "$auto_log_path"/autologin.conf
+ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin $USERNAME %I \$TERM" >> "$auto_log_path"/autologin.conf
 
     mkinitcpio -P
 

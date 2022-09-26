@@ -16,7 +16,10 @@ configure_system() {
     echo "[Setting locale]"
     genfstab -U /mnt >> /mnt/etc/fstab
     arch-chroot /mnt /bin/bash -c "su root -c /$chroot_setup"
+
+    # Clean up
     rm /mnt/$chroot_setup
+    rm /mnt/packages
 }
 
 install_packages() {
