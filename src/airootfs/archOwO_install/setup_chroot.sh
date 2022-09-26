@@ -36,7 +36,7 @@ apply_settings() {
     chmod 755 /etc/X11/xinit/xinitrc
 
     # Create auto login
-    local -r auto_log_path="/etc/systemd/system/getty@tty1.service.d"
+    local -r auto_log_path="/etc/systemd/system/getty@tty7.service.d"
     mkdir -p "$auto_log_path"
     touch "$auto_log_path"/autologin.conf
     echo "[Service]

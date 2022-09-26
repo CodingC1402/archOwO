@@ -2,6 +2,7 @@
 Description=Initial setups
 
 [Service]
+ExecStartPre=/usr/bin/chvt 7
 ExecStart=/archOwO/initial-setups.sh
 
 [Install]
