@@ -10,6 +10,7 @@ configure_system() {
 
     local -r chroot_setup="setup_chroot.sh"
     cp /archOwO_install/$chroot_setup /mnt/
+    cp /archOwO_install/packages /mnt/
     chmod 777 /mnt/$chroot_setup
 
     echo "[Setting locale]"
@@ -18,77 +19,12 @@ configure_system() {
     rm /mnt/$chroot_setup
 }
 
-install_graphic_driver() {
-    echo "[Installing graphic driver]"
-    
-    # Run build not as root
-    sudo -u archowo bash -c '\
-        mkdir -p /mnt/archOwO/temp
-        cd /mnt/archOwO/temp
-        git clone https://aur.archlinux.org/nvidia-vulkan.git
-        cd ./nvidia-vulkan
-        makepkg -sc || exit 1
-        exit 0
-    '
-
-    if (($? != 0)) ; then
-        exit 1
-    fi
-
-    cd /mnt/archOwO/temp/nvidia-vulkan || exit 1
-    local packages=""
-    for package in *pkg.tar.zst ; do
-        if [[ ${package:0:18} != "nvidia-vulkan-dkms" ]] ; then
-            packages="$packages $package"
-        fi
-    done
-
-    pacstrap -U /mnt $packages
-} 
-
 install_packages() {
-    echo "[Installing packages]"
+    echo "[Installing essential packages]"
 
-    local packages=""
-    echo "[Is your cpu amd or intel]"
-    echo "1) AMD"
-    echo "2) Intel"
-    read -r option
-
-    local ucode=""
-    case "${option}" in
-        1)
-            ucode="amd-ucode"
-        ;;
-        2)
-            ucode="intel-ucode"
-        ;;
-        *)
-            echo "Error"
-            exit 1
-        ;;
-    esac
-    packages="$packages $ucode"
-
-    while read -r package ; do
-        packages="${packages} ${package}"
-    done < <(grep -v '^#\|^$' /archOwO_install/packages)
-
-    pacstrap /mnt $packages || exit 1
-}
-
-setup_chaotic_aur() {
-    echo "[Installing chaotic aur]"
-    
     pacman-key --init || exit 1
-    pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com || exit 1
-    pacman-key --lsign-key FBA220DFC880C036 || exit 1
-    (echo "Y") | pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' || exit 1
-    
-    echo "
-    [chaotic-aur]
-    Include = /etc/pacman.d/chaotic-mirrorlist
-    " >> /etc/pacman.conf
+    local packages="base linux linux-firmware"
+    pacstrap /mnt $packages || exit 1
 }
 
 mount_fs() {
@@ -164,13 +100,11 @@ main() {
     test_internet 
     set_system_clock
     choose_and_format_disk
-    setup_chaotic_aur
     mount_fs
     install_packages
-    install_graphic_driver
     configure_system
 
-    umount  -R /mnt
+    umount -R /mnt
     echo "[Finish installing archOwO please reboot and remove the installation medium]"
     return 0
 }

@@ -7,6 +7,7 @@ util-linux
 alsa-utils
 grub
 base
+reflector
 arch-install-scripts
 
 # [Users packages]

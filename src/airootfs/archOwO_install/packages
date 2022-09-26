@@ -1,8 +1,5 @@
 # [Linux essential packages]
-base 
 grub 
-linux 
-linux-firmware 
 vim
 util-linux
 alsa-utils
@@ -19,17 +16,15 @@ cryptsetup
 parole
 gst-libav
 
-# [Package manager gui]
+# [Package manager utils]
 pamac
+reflector
 
 # [Graphics packages]
 xorg-server
 libglvnd
 egl-wayland
 zlib
-lib32-zlib
-lib32-gcc-libs
-lib32-libglvnd
 
 # [Browser]
 ungoogled-chromium
@@ -54,6 +49,3 @@ networkmanager
 network-manager-applet
 nftables
 openssh
-
-# [Installation packages]
-syslinux

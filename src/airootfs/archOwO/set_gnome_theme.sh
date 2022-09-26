@@ -6,12 +6,6 @@
 main() {
     local -r darkThemes=("Adwaita-dark" "dark")
 
-    # start/restart pulseaudio
-    #local -r isRunning=$(pulseaudio --check)
-    #if (( isRunning != 0 )); then
-    #    pulseaudio -D
-    #fi
-
     # change gnome theme according to xfce theme
     local -r currentXfceTheme=$(xfconf-query -c xsettings -p /Net/ThemeName)
     local gnomeTheme="prefer-light"

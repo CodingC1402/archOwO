@@ -1,6 +1,6 @@
 #!/bin/bash
 
-main() {
+apply_settings() {
     ln -sf /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
     hwclock --systohc
 
@@ -20,12 +20,97 @@ main() {
     systemctl enable sddm
     systemctl enable initial_setups
     systemctl enable NetworkManager
+    systemctl enable reflector
 
     # Set executable permission
     local -r mount_root="/archOwO"
     chmod +x "$mount_root/initial-setups.sh"
     chmod +x "$mount_root/set_gnome_theme.sh"
+    chmod +x "$mount_root/start_pulse_audio.sh"
+
+    mkinitcpio -P
+
+    # Install grub
+    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --removable
+
+    # Update grub configs
+    grub-mkconfig -o /boot/grub/grub.cfg
+}
+
+install_graphic_driver() {
+    echo "[Installing graphic driver]"
     
+    # Run build not as root
+    sudo -u "$USERNAME" bash -c '\
+        mkdir -p ~/Downloads/temp
+        cd ~/Downloads/temp
+        git clone https://aur.archlinux.org/nvidia-vulkan.git
+        cd ./nvidia-vulkan
+        makepkg -sc || exit 1
+        exit 0
+    '
+
+    if (($? != 0)) ; then
+        exit 1
+    fi
+
+    cd ~/Downloads/temp/nvidia-vulkan || exit 1
+    local packages=""
+    for package in *pkg.tar.zst ; do
+        if [[ ! $package =~ (lib32|dkms)+ ]] ; then
+            packages="$packages $package"
+        fi
+    done
+
+    pacman -U $packages
+}
+
+install_packages() {
+    echo "[Installing essential packages]"
+
+    local packages=""
+    echo "[Is your cpu amd or intel]"
+    echo "1) AMD"
+    echo "2) Intel"
+    read -r option
+
+    local ucode=""
+    case "${option}" in
+        1)
+            ucode="amd-ucode"
+        ;;
+        2)
+            ucode="intel-ucode"
+        ;;
+        *)
+            echo "Error"
+            exit 1
+        ;;
+    esac
+    packages="$packages $ucode"
+
+    while read -r package ; do
+        packages="${packages} ${package}"
+    done < <(grep -v '^#\|^$' /packages)
+
+    pacman -Syu $packages || exit 1
+}
+
+setup_chaotic_aur() {
+    echo "[Installing chaotic aur]"
+    
+    pacman-key --init || exit 1
+    pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com || exit 1
+    pacman-key --lsign-key FBA220DFC880C036 || exit 1
+    (echo "Y") | pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' || exit 1
+    
+    echo "
+    [chaotic-aur]
+    Include = /etc/pacman.d/chaotic-mirrorlist
+    " >> /etc/pacman.conf
+}
+
+create_user() {
     echo "[Enter your username]"
     read -r username
     
@@ -38,11 +123,15 @@ main() {
     echo "[Password for root]"
     passwd root
 
-    # Install grub
-    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+    export USERNAME=$username
+}
 
-    # Update grub configs
-    grub-mkconfig -o /boot/grub/grub.cfg
+main() {
+    create_user
+    setup_chaotic_aur
+    install_packages
+    install_graphic_driver
+    apply_settings
 }
 
 main "$0"

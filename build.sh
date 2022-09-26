@@ -49,6 +49,5 @@ fi
 
 if [[ $opt == "3" ]] || [[ $opt == "4" ]]
 then
-	echo "Burning to disk..."
-	cp -r "$outDir"/*.iso "$burnDisk"
+	dd bs=4M if=$(dirname "$0")/.release/archOwO-$(date +%Y.%m.%d)-x86_64.iso of=$burnDisk status=progress oflag=sync
 fi
