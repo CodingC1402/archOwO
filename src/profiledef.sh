@@ -22,4 +22,5 @@ file_permissions=(
   ["/archOwO/initial-setups.sh"]="0:0:0700"
   ["/archOwO/set_gnome_theme.sh"]="0:0:0700"
   ["/archOwO_install/setup.sh"]="0:0:0700"
+  ["/etc/profile.d/startx.sh"]="0:0:0755"
 )

@@ -32,10 +32,6 @@ catfish
 gvfs
 file-roller
 pamac
-sddm
-qt5-quickcontrols
-qt5-quickcontrols2
-qt5-graphicaleffects
 
 # [Audio packages]
 pulseaudio
@@ -48,7 +44,7 @@ nftables
 openssh
 
 # [Browser packages]
-firefox
+chromium
 
 # [For small installation packages]
 mkinitcpio

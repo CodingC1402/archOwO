@@ -28,6 +28,17 @@ apply_settings() {
     chmod +x "$mount_root/set_gnome_theme.sh"
     chmod +x "$mount_root/start_pulse_audio.sh"
 
+    local -r profile="/etc/profile.d"
+    chmod 755 "$profile"/startx.sh
+
+    # Create auto login
+    local -r auto_log_path="/etc/systemd/system/getty@tty1.service.d"
+    mkdir -p "$auto_log_path"
+    touch "$auto_log_path"/autologin.conf
+    echo "[Service]
+ExecStart=
+ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin $USERNAME %I $TERM" >> "$auto_log_path"/autologin.conf
+
     mkinitcpio -P
 
     # Install grub
@@ -39,22 +50,23 @@ apply_settings() {
 
 install_graphic_driver() {
     echo "[Installing graphic driver]"
-    
+    local -r dir="/home/$USERNAME/Downloads/temp"
+
     # Run build not as root
-    sudo -u "$USERNAME" bash -c '\
-        mkdir -p ~/Downloads/temp
-        cd ~/Downloads/temp
+    sudo -u "$USERNAME" bash -c "\\
+        mkdir -p $dir
+        cd $dir
         git clone https://aur.archlinux.org/nvidia-vulkan.git
         cd ./nvidia-vulkan
         makepkg -sc || exit 1
         exit 0
-    '
+    "
 
     if (($? != 0)) ; then
         exit 1
     fi
 
-    cd ~/Downloads/temp/nvidia-vulkan || exit 1
+    cd "$dir"/nvidia-vulkan || exit 1
     local packages=""
     for package in *pkg.tar.zst ; do
         if [[ ! $package =~ (lib32|dkms)+ ]] ; then
@@ -62,7 +74,7 @@ install_graphic_driver() {
         fi
     done
 
-    pacman -U $packages
+    pacman -U --needed --noconfirm $packages
 }
 
 install_packages() {
@@ -93,7 +105,7 @@ install_packages() {
         packages="${packages} ${package}"
     done < <(grep -v '^#\|^$' /packages)
 
-    pacman -Syu $packages || exit 1
+    pacman -Syu --needed --noconfirm $packages || exit 1
 }
 
 setup_chaotic_aur() {

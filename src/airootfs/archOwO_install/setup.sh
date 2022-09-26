@@ -61,17 +61,17 @@ choose_and_format_disk() {
     echo "[Creating file system, enter partition postfix]"
     read -r fsPar
     fsPar="${disk}${fsPar}"
-    (echo Y) | mkfs.ext4 "$fsPar" || exit 1
+    (echo Y) | mkfs.ext4 "$fsPar" && e2label "$fsPar" ROOT || exit 1
 
     echo "[Initialize swap partition, enter partion postfix]"
     read -r swapPar
     swapPar="${disk}${swapPar}"
-    mkswap "$swapPar" || exit 1
+    mkswap -L SWAP "$swapPar" || exit 1
 
     echo "[Creating efi system partition, enter partion postfix]"
     read -r efiPar
     efiPar="${disk}${efiPar}"
-    mkfs.fat -F 32 "$efiPar" || exit 1
+    mkfs.fat -F 32 "$efiPar" && fatlabel "$efiPar" EFI || exit 1
     
     export FS_PAR=$fsPar
     export SWAP_PAR=$swapPar
