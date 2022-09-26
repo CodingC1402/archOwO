@@ -24,12 +24,14 @@ apply_settings() {
 
     # Set executable permission
     local -r mount_root="/archOwO"
-    chmod +x "$mount_root/initial-setups.sh"
-    chmod +x "$mount_root/set_gnome_theme.sh"
-    chmod +x "$mount_root/start_pulse_audio.sh"
+    for file in "$mount_root"/*.sh ; do
+        chmod 755 "$file"
+    done
 
     local -r profile="/etc/profile.d"
-    chmod 755 "$profile"/startx.sh
+    for file in "$profile"/*.sh ; do
+        chmod 755 "$file"
+    done
 
     # Create auto login
     local -r auto_log_path="/etc/systemd/system/getty@tty1.service.d"
