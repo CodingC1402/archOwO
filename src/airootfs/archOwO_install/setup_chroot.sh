@@ -79,6 +79,7 @@ install_graphic_driver() {
     done
 
     pacman -U --needed --noconfirm $packages
+    rm -r "$dir"
 }
 
 install_packages() {
