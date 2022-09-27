@@ -43,14 +43,14 @@ apply_settings() {
 ExecStart=
 ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin $USERNAME %I \$TERM" >> "$auto_log_path"/autologin.conf
 
+    # I don't know what this does :P
+    mkinitcpio -P || exit 1
+
     # Install grub
     grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB --removable || exit 1
 
     # Update grub configs
     grub-mkconfig -o /boot/grub/grub.cfg || exit 1
-
-    # I don't know what this does :P
-    mkinitcpio -P || exit 1
 }
 
 install_graphic_driver() {
@@ -80,6 +80,10 @@ install_graphic_driver() {
     done
 
     pacman -U --needed --noconfirm $packages
+
+    # This is important, remember this for the future
+    cd /
+
     rm -r "$dir"
 }
 

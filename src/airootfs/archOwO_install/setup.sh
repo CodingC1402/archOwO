@@ -139,7 +139,6 @@ main() {
 
     umount -R /mnt
     echo "[Finish installing archOwO please reboot and remove the installation medium]"
-    read -r _
     return 0
 }
 
