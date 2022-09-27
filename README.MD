@@ -7,4 +7,6 @@
 - Add preconfig pacman.conf to archOwO_install to pre-enable multilib
 - Add git to the packages
 - Add pamac configs to enable AUR by default
-- 
+- Build the theme and icons straight from AUR instead of packing it with the medium
+- Add preconfigured folders with emblem and add shortcut to tree view
+
