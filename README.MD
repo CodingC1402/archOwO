@@ -9,4 +9,5 @@
 - Add pamac configs to enable AUR by default
 - Build the theme and icons straight from AUR instead of packing it with the medium
 - Add preconfigured folders with emblem and add shortcut to tree view
-
+- Preinstall wine staging
+- Check if another package is needed for league to run
