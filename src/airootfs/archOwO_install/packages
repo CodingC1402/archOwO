@@ -40,6 +40,11 @@ file-roller
 pulseaudio
 pavucontrol
 
+# [Fonts]
+otf-ipafont
+ttf-baekmuk
+ttf-arphic-ukai
+
 # [Network packages]
 networkmanager
 network-manager-applet

@@ -19,9 +19,11 @@ file_permissions=(
   ["/etc/shadow"]="0:0:400"
   ["/etc/gshadow"]="0:0:0400"
   ["/etc/sudoers"]="0:0:0400"
+  ["/etc/X11/xinit/xinitrc"]="0:0:0755"
   ["/archOwO/initial-setups.sh"]="0:0:0755"
   ["/archOwO/set_gnome_theme.sh"]="0:0:0755"
   ["/archOwO_install/setup.sh"]="0:0:0755"
   ["/archOwO_install/injectOwO.sh"]="0:0:0755"
   ["/etc/profile.d/startx.sh"]="0:0:0755"
+  ["/etc/profile.d/mark_executable.sh"]="0:0:0755"
 )
